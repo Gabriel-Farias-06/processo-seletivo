@@ -1,7 +1,5 @@
 package candidatura;
-
 import java.util.Scanner;
-
 /**
  *
  * @author gabriel.rfarias
@@ -11,28 +9,60 @@ public class ProcessoSeletivo {
     static double salarioBase = 2000.0;
     
     public static void main(String[] args) {
-        avaliarCandidato(1900.0);
-        avaliarCandidato(2200.0);
-        avaliarCandidato(2000.0);
+        String [] candidatos = {"FELIPE", "MARCIA", "JULIA", "PAULO", "AUGUSTO", "MONICA", "FABRICIO", "MIRELA", "DANIELA", "JORGE"};
+        double [] salarioPretendido = {1432.5, 1984.4, 1476.6, 3432.5, 2984.4, 2476.6, 2347.8, 1424.5, 1424.8, 2112.3};
+        for (int i = 0; i < 10; i++) {
+            avaliarCandidato(candidatos[i], salarioPretendido[i]);
+        }
+        String [] selecionados = selecionarCandidatos(candidatos, salarioPretendido);
+        contatarSelecionado(selecionados);
+
+
     }
 
-    public static void selecionarCandidatos() {
-        String [] candidatos = {"FELIPE", "MARCIA", "JULIA", "PAULO", "AUGUSTO", "MONICA", "FABRICIO", "MIRELA", "DANIELA", "JORGE"};
-        int selecionados = 0;
-        int candidatoAtual = 0;
-        while (selecionados < 5 && candidatoAtual < candidatos.length) { 
-            String candidato = candidatos[candidatoAtual];
-            System.out.println("Defina o salário pretendido do candidato " + candidato);
-            double salarioPretendido = sc.nextDouble();
-            if (salarioPretendido >= salarioBase){
-                System.out.println("O candidato " + candidato + " foi selecionado");
-                selecionados++;
+    public static void contatarSelecionado(String[] selecionados) {
+        for (String selecionado : selecionados) {
+            for(int i = 0; i < 3; i++) {
+                System.out.println("Ligando para " + selecionado);
+                System.out.print(selecionado + " atendeu? ");
+                boolean atendeu = sc.nextBoolean();
+                if (atendeu){
+                    System.out.println("O candidato atendeu apos " + (i + 1) + " tentativas");
+                    break;
+                }
+                else
+                    System.out.println("O candidato nao atendeu");
             }
-            candidatoAtual++;
         }
     }
 
-    public static void avaliarCandidato(double salarioPretendido){
+    public static void imprimirSelecionados(String [] selecionados) {
+        
+        System.out.println("Imprimindo a Lista de Candidatos");
+
+        for (String selecionado: selecionados)
+            System.out.println("Candidato Selecionado: " + selecionado);
+    }
+
+    public static String[] selecionarCandidatos(String[] candidatos, double[] salarioPretendidos) {
+        String [] selecionados = new String[5];
+        int candidatoAtual = 0, qntddSelecionados = 0;
+        while (qntddSelecionados < 5 && candidatoAtual < candidatos.length)  { 
+            String candidato = candidatos[candidatoAtual];
+            double salarioPretendido = salarioPretendidos[candidatoAtual];
+            if (salarioPretendido < salarioBase){
+                System.out.println("O candidato " + candidato + " foi selecionado");
+                selecionados[qntddSelecionados] = candidato;
+                qntddSelecionados++;
+            }
+            candidatoAtual++;
+        }
+
+        imprimirSelecionados(selecionados);
+        return selecionados;
+    }
+
+    public static void avaliarCandidato(String nome, double salarioPretendido){
         if (salarioBase > salarioPretendido)
             System.out.println("LIGAR PARA O CANDIDATO");
         else if (salarioBase == salarioPretendido)
