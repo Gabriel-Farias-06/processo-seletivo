@@ -22,17 +22,21 @@ public class ProcessoSeletivo {
 
     public static void contatarSelecionado(String[] selecionados) {
         for (String selecionado : selecionados) {
+            boolean respondeu = false;
             for(int i = 0; i < 3; i++) {
                 System.out.println("Ligando para " + selecionado);
                 System.out.print(selecionado + " atendeu? ");
                 boolean atendeu = sc.nextBoolean();
                 if (atendeu){
-                    System.out.println("O candidato atendeu apos " + (i + 1) + " tentativas");
+                    System.out.println("O candidato " + selecionado + " atendeu apos " + (i + 1) + " tentativas");
+                    respondeu = true;
                     break;
                 }
                 else
-                    System.out.println("O candidato nao atendeu");
+                    System.out.println("O candidato não atendeu");
             }
+            if (!respondeu)
+                System.out.println("O candidato " + selecionado + " não retornou após 3 ligações");
         }
     }
 
